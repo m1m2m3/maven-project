@@ -11,7 +11,7 @@ pipeline {
             steps {
            withMaven(jdk: 'myjdk', maven: 'mymaven')
 					{
-					sh 'mvn test package install'       
+					sh 'mvn test package'       
 					}    
 				}
         }
