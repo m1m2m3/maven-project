@@ -25,6 +25,16 @@ pipeline {
 					}    
 		 }
             }
+	    
+	   tage('install')
+	    {
+            steps {
+           withMaven(jdk: 'myjdk', maven: 'mymaven')
+					{
+					sh 'mvn install'      
+					}    
+		 }
+            }
        
     }
 }
