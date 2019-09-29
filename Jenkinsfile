@@ -7,20 +7,24 @@ pipeline {
 				git "https://github.com/m1m2m3/maven-project.git"
 	         }
         }
-        stage('Test') {
+        stage('Test')
+	    {
             steps {
            withMaven(jdk: 'myjdk', maven: 'mymaven')
 					{
-					sh 'mvn test'       
+					sh 'mvn test'      
 					}    
-				}
-			steps {
+		 }
+            }
+	  stage('Package')
+	    {
+            steps {
            withMaven(jdk: 'myjdk', maven: 'mymaven')
 					{
-					sh 'mvn package'       
+					sh 'mvn package'      
 					}    
-				}
-        }
+		 }
+            }
        
     }
 }
