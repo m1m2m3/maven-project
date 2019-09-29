@@ -26,7 +26,7 @@ pipeline {
 		 }
             }
 	    
-	   tage('install')
+	   stage('install')
 	    {
             steps {
            withMaven(jdk: 'myjdk', maven: 'mymaven')
