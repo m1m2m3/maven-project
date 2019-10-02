@@ -36,16 +36,16 @@ pipeline {
 		 }
             }
 	    
-	   stage('SonarQube analysis') 
-	    {
+           stage('build && SonarQube analysis') {
             steps {
-            withSonarQubeEnv(credentialsId: 'abc', installationName: 'MySonar') 
-	           {
-                  sh 'mvn sonar:sonar'   // some block
-                   }
-      
-               }
-           }
+                withSonarQubeEnv(credentialsId: 'abc', installationName: 'MySonar') {
+                    // Optionally use a Maven environment you've configured already
+                 withMaven(maven:'Maven 3.5.2') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
+            }
+        }
 	    
 	   stage ('Deploy to Tomcat') 
 	    {
