@@ -35,11 +35,23 @@ pipeline {
 					}    
 		 }
             }
+	    
+	   stage('SonarQube analysis') 
+	    {
+            step {
+            withSonarQubeEnv(credentialsId: 'abc', installationName: 'MySonar') 
+	           {
+                  sh 'mvn sonar:sonar'   // some block
+                   }
+      
+               }
+           }
+	    
 	   stage ('Deploy to Tomcat') 
 	    {
 	   steps{
-           sshagent (['3.89.133.217']) {
-           sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@3.89.133.217:/var/lib/tomcat/webapps'
+           sshagent (['54.175.245.41']) {
+           sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@54.175.245.41:/var/lib/tomcat/webapps'
                             }
                 }
            }
