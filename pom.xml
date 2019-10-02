@@ -27,6 +27,16 @@
       <name>Test Project Site</name>
       <url>file:///tmp/maven-project-site</url>
     </site>
+    <repository>
+            <id>deployment</id>
+            <name>Internal Releases</name>
+            <url>http://52.206.158.115:8081/repository/StudentRelease/</url>
+        </repository>
+        <snapshotRepository>
+            <id>deployment</id>
+            <name>Internal Snapshot Releases</name>
+            <url>http://52.206.158.115:8081/repository/Studentsnap/</url>
+        </snapshotRepository>
   </distributionManagement>
 
   <build>
@@ -216,19 +226,6 @@
   <prerequisites>
     <maven>3.0.3</maven>
   </prerequisites>
-  <distributionManagement>
-        <repository>
-            <id>deployment</id>
-            <name>Internal Releases</name>
-            <url>http://52.206.158.115:8081/repository/StudentRelease/</url>
-        </repository>
-        <snapshotRepository>
-            <id>deployment</id>
-            <name>Internal Snapshot Releases</name>
-            <url>http://52.206.158.115:8081/repository/Studentsnap/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
 </project>
 
 
