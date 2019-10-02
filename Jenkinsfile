@@ -2,50 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-				git "https://github.com/m1m2m3/maven-project.git"
-	         }
-        }
-        stage('Test')
+        stage('Build') 
 	    {
             steps {
-           withMaven(jdk: 'myjdk', maven: 'mymaven')
-					{
-					sh 'mvn test'      
-					}    
-		 }
+		  git "https://github.com/m1m2m3/maven-project.git"
+	          }
             }
-	  stage('Package')
+        
+           stage('build && SonarQube analysis') 
 	    {
             steps {
-           withMaven(jdk: 'myjdk', maven: 'mymaven')
-					{
-					sh 'mvn package'      
-					}    
-		 }
-            }
-	    
-	   stage('install')
-	    {
-            steps {
-           withMaven(jdk: 'myjdk', maven: 'mymaven')
-					{
-					sh 'mvn install'      
-					}    
-		 }
-            }
-	    
-           stage('build && SonarQube analysis') {
-            steps {
-                withSonarQubeEnv(credentialsId: 'abc', installationName: 'Sonar') {
+                withSonarQubeEnv(credentialsId: 'abc', installationName: 'Sonar') 
+		    {
                     // Optionally use a Maven environment you've configured already
-                 withMaven(maven:'Maven 3.5.2') {
+                 withMaven(jdk: 'myjdk', maven: 'mymaven') 
+			    {
                         sh 'mvn clean package sonar:sonar'
-                    }
+                            }
+                   }
                 }
-            }
-        }
+           }
 	    
 	   stage ('Deploy to Tomcat') 
 	    {
