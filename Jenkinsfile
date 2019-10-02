@@ -12,7 +12,7 @@ pipeline {
            stage('build && SonarQube analysis') 
 	    {
             steps {
-                withSonarQubeEnv(credentialsId: 'abc', installationName: 'Sonar') 
+                withSonarQubeEnv(credentialsId: 'sonarnew', installationName: 'Sonar') 
 		    {
                     // Optionally use a Maven environment you've configured already
                  withMaven(jdk: 'myjdk', maven: 'mymaven') 
@@ -26,9 +26,9 @@ pipeline {
 	   stage ('Deploy to Tomcat') 
 	    {
 	   steps{
-           sshagent(['54.175.245.41']) 
+           sshagent(['3.93.241.158']) 
 		   {
-                   sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@54.175.245.41:/var/lib/tomcat/webapps'
+                   sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@3.93.241.158:/var/lib/tomcat/webapps'
                     }
                 }
            }
