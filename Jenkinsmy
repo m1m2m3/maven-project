@@ -1,29 +1,27 @@
-pipeline
+pipeline 
 {
-   agent any
-   stages
-{
-   stage ('SCM checkout')
-        {
-        steps{
-        git 'https://github.com/m1m2m3/maven-project.git'
-              }     
+    agent any
+    stages 
+ {
+        stage('SCM Checkout') 
+	    {
+            steps {
+      		  git "https://github.com/m1m2m3/maven-project.git"
+	             }
         }
-   stage ('Build')
-        {
-        steps{
-        withMaven(jdk: 'myjdk', maven: 'mymaven') 
-                  {
-                   sh 'mvn clean install'// some block
-                  }
-              }     
-        }
-    stage('Checkstyle') 
-         {
-           steps {
-                 sh "mvn checkstyle:check"
-                 recordIssues(tools: [checkStyle(reportEncoding: 'UTF-8')])
-                  }
-          }    
- }
+        
+           stage('build && SonarQube analysis') 
+	    {
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonar', installationName: 'Sonar') 
+		    {
+                    // Optionally use a Maven environment you've configured already
+                 withMaven(jdk: 'myjdk', maven: 'mymaven') 
+			    {
+                        sh 'mvn clean package sonar:sonar'
+                            }
+                   }
+                }
+           }
+  }
 }
